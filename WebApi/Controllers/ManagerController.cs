@@ -53,4 +53,16 @@ public class ManagerController
     {
         return await _managerService.GetAboutEmployee();
     }
+
+    [HttpGet("GetName")]
+    public async Task<Response<List<AboutEmployee>>> GetByName(string name)
+    {
+        return await _managerService.GetAboutEmployeeName(name);
+    }
+
+    [HttpGet("GetPhoneNumber")]
+    public async Task<Response<List<AboutEmployee>>> GetByPhone(string phone)
+    {
+        return await _managerService.GetAboutEmployeePhone(phone);
+    }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using Domain.Dtos;
 using Domain.Entities;
@@ -81,5 +82,47 @@ public class ManagerService
         }).ToListAsync();
         return new Response<List<AboutEmployee>>(list);
     }
+
+    public async Task<Response<List<AboutEmployee>>> GetAboutEmployeeName(string name)
+    {
+        var find = await (from a in _context.Employees
+        where a.FirstName.Contains(name)
+        select new AboutEmployee()
+        {
+            EmployeeId = a.EmployeeId,
+            FirstName = a.FirstName,
+            LastName = a.LastName,
+            JobId = a.Job.JobId,
+            JobName = a.Job.JobName,
+            Description = a.Job.Description,
+            Phone = a.Phone,
+            Address = a.Address
+
+        }).ToListAsync();
+
+        return new Response<List<AboutEmployee>>(find);
+    }
+
+     public async Task<Response<List<AboutEmployee>>> GetAboutEmployeePhone(string phone)
+    {
+        var find = await (from a in _context.Employees
+        where a.Phone.Equals(phone)
+        select new AboutEmployee()
+        {
+            EmployeeId = a.EmployeeId,
+            FirstName = a.FirstName,
+            LastName = a.LastName,
+            JobId = a.Job.JobId,
+            JobName = a.Job.JobName,
+            Description = a.Job.Description,
+            Phone = a.Phone,
+            Address = a.Address
+
+        }).ToListAsync();
+
+        return new Response<List<AboutEmployee>>(find);
+    }
+
+    // public async Task<Response<List<AboutEmployee>>> GetAverage()
 }
 
